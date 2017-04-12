@@ -3,5 +3,5 @@ Downloads live PV generation data from pvoutput and displays it on a dial of RGB
 
 Hardware and Project Details at https://hackaday.io/post/57138
 
-Project by makehacktech (Tony)
+Project by makehacktech | Anthony Pearce
 
