@@ -3,7 +3,7 @@
       File: energy-display
       Author: Anthony Pearce | makehacktech
       Start Date: 10 April 2017
-      Version 1.02 Date: 12 Apr 2017
+      Version 1.03 Date: 16 Apr 2017
       Licence: MIT Licence
       
       This sketch connects to WiFi, downloads live PV power generation data from pvoutput.org and displays it on an LED dial
@@ -19,9 +19,10 @@
     1.0 Program structure start
     1.01 Added startup display, partial interval light
     1.02 Cleanup code for publishing
+    1.03 (github edit) move startup lights before wifi connection
 
   Bugs
-
+    Nil known
 
   Thanks to Adafruit for the Neopixel library and the ESP8266 community for the ESP8266Wifi library.
 
@@ -104,6 +105,34 @@ String spowgen;
 /******************************************************/
 void setup() {
 
+ // Display setup
+  pixels.begin(); // This initializes the NeoPixel library.
+
+  // Startup display animation
+  pixels.clear(); // blank out prior display
+  pixels.setPixelColor(6, pixels.Color(0,0,normal)); 
+  pixels.setPixelColor(14, pixels.Color(0,0,normal)); 
+  pixels.setPixelColor(22, pixels.Color(0,0,normal)); 
+  pixels.show(); // Send updated pixel colours to the hardware.
+  delay(blinkdur);
+  pixels.clear(); // blank out prior display
+  delay(blinkdur);
+  pixels.setPixelColor(2, pixels.Color(0,0,normal)); 
+  pixels.setPixelColor(10, pixels.Color(0,0,normal));
+  pixels.setPixelColor(18, pixels.Color(0,0,normal)); 
+  pixels.show(); // Send updated pixel colours to the hardware.
+  delay(blinkdur);
+  pixels.clear(); // blank out prior display
+  delay(blinkdur);
+  pixels.setPixelColor(6, pixels.Color(0,0,normal)); 
+  pixels.setPixelColor(14, pixels.Color(0,0,normal)); 
+  pixels.setPixelColor(22, pixels.Color(0,0,normal));
+  pixels.show(); // Send updated pixel colours to the hardware.
+  delay(blinkdur);
+  // Clear display
+  pixels.clear(); // blank out prior display
+  pixels.show(); // Send updated pixel colours to the hardware.
+      
   // Enable serial comms
   Serial.begin(115200);
   delay(10);
@@ -134,36 +163,7 @@ void setup() {
   url += sid;
   url += "&key=";
   url += key;
-
-
-  // Display setup
-  pixels.begin(); // This initializes the NeoPixel library.
-
-  // Startup display animation
-  pixels.clear(); // blank out prior display
-  pixels.setPixelColor(6, pixels.Color(0,0,normal)); 
-  pixels.setPixelColor(14, pixels.Color(0,0,normal)); 
-  pixels.setPixelColor(22, pixels.Color(0,0,normal)); 
-  pixels.show(); // Send updated pixel colours to the hardware.
-  delay(blinkdur);
-  pixels.clear(); // blank out prior display
-  delay(blinkdur);
-  pixels.setPixelColor(2, pixels.Color(0,0,normal)); 
-  pixels.setPixelColor(10, pixels.Color(0,0,normal));
-  pixels.setPixelColor(18, pixels.Color(0,0,normal)); 
-  pixels.show(); // Send updated pixel colours to the hardware.
-  delay(blinkdur);
-  pixels.clear(); // blank out prior display
-  delay(blinkdur);
-  pixels.setPixelColor(6, pixels.Color(0,0,normal)); 
-  pixels.setPixelColor(14, pixels.Color(0,0,normal)); 
-  pixels.setPixelColor(22, pixels.Color(0,0,normal));
-  pixels.show(); // Send updated pixel colours to the hardware.
-  delay(blinkdur);
-  // Clear display
-  pixels.clear(); // blank out prior display
-  pixels.show(); // Send updated pixel colours to the hardware.
-  
+      
   // Short delay before starting to get data from pvoutput
   delay(shortdelay);
 
