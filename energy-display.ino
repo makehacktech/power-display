@@ -3,7 +3,7 @@
       File: energy-display
       Author: Anthony Pearce | makehacktech
       Start Date: 10 April 2017
-      Version 1.03 Date: 16 Apr 2017
+      Version 1.04 Date: 29 Apr 2017
       Licence: MIT Licence
       
       This sketch connects to WiFi, downloads live PV power generation data from pvoutput.org and displays it on an LED dial
@@ -20,6 +20,7 @@
     1.01 Added startup display, partial interval light
     1.02 Cleanup code for publishing
     1.03 (github edit) move startup lights before wifi connection
+    1.04 (github edit) add static IP
 
   Bugs
     Nil known
@@ -44,6 +45,11 @@ Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ80
 const char* ssid     = "<your network ssid>"; // The ssid of your wifi network
 const char* password = "<your network password>"; // the password for your wifi network
 const int maxtimeout = 5000; // timeout if no response after this many ms
+
+// Static IP details - uncomment below as well as WiFi.config line item in setup to enable static IP address
+//IPAddress ip(192, 168, 0, 100); // Chose your own!
+//IPAddress gateway(192, 168, 0, 1); // use ipconfig to find the gateway for your router
+//IPAddress subnet(255, 255, 255, 0); // use ipconfig to find the subnet mask for your router
 
 // pvoutput.org URL and API details. Replace these with your own pvoutput.org account details
 const char* host = "pvoutput.org"; // pvoutput URL
@@ -145,6 +151,10 @@ void setup() {
 
   //Set ESP8266 to be a wifi client
   WiFi.mode(WIFI_STA);
+  
+  // Static IP Setup - uncomment below as well as definition of ip, gateway and config 
+  // WiFi.config(ip, gateway, subnet);
+      
   WiFi.begin(ssid, password);
   
   while (WiFi.status() != WL_CONNECTED) {
